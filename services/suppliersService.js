@@ -1,16 +1,16 @@
 const faker = require('faker')
 const boom = require('@hapi/boom')
 
-class ProvidersService {
+class SuppliersService {
     constructor(){
-        this.providers = [];
+        this.suppliers = [];
         this.generate();
     }
 
     generate(){
     const limit = 100;
     for (let i = 0; i < limit; i++) {
-        this.providers.push({
+        this.suppliers.push({
             id: faker.datatype.uuid(),
             company: faker.company.companyName(),
             phone: faker.phone.phoneNumberFormat(),
@@ -22,54 +22,54 @@ class ProvidersService {
     }
 
     async create(data){
-        const newProvider = {
+        const newSupplier = {
             id: faker.datatype.uuid(),
             ...data
         }
-        this.providers.push(newProvider)
-        return newProvider;
+        this.suppliers.push(newSupplier)
+        return newSupplier;
     }
 
     find(){
         return new Promise((resolve, reject)=>{
             setTimeout(() => {
-                resolve(this.providers);
+                resolve(this.suppliers);
             }, 5000);
         })
     }
 
     async findone(id){
-        const provider = this.providers.find(item => item.id===id)
-        if(!provider){
-           throw boom.notFound('Provider not found');
+        const supplier = this.suppliers.find(item => item.id===id)
+        if(!supplier){
+           throw boom.notFound('supplier not found');
         }
-        if(provider.isBlock){
+        if(supplier.isBlock){
             throw boom.conflict('Providr is block')
         }
-        return provider;
+        return supplier;
     }
 
     async update(id, changes){
-        const index = this.providers.findIndex(item=>item.id===id )
+        const index = this.suppliers.findIndex(item=>item.id===id )
         if(index === -1){
-            throw boom.notFound('Provider not found');
+            throw boom.notFound('supplier not found');
         }
-        const provider = this.providers[index]
-        this.providers[index] = {
-            ...provider,
+        const supplier = this.suppliers[index]
+        this.suppliers[index] = {
+            ...supplier,
             ...changes
         }
-        return this.providers[index]
+        return this.suppliers[index]
     }
 
     async delete(id){
-        const index = this.providers.findIndex(item=>item.id===id )
+        const index = this.suppliers.findIndex(item=>item.id===id )
         if(index === -1){
-            throw boom.notFound('Provider not found');
+            throw boom.notFound('supplier not found');
         }
-        this.providers.splice(index, 1);
+        this.suppliers.splice(index, 1);
         return { id };
     }
 }
 
-module.exports = ProvidersService
+module.exports = SuppliersService

@@ -12,9 +12,8 @@ class CartsService {
     for (let i = 0; i < limit; i++) {
         this.carts.push({
             id: faker.datatype.uuid(),
-            company: faker.company.companyName(),
-            date: faker.date.recent(),
             name: faker.commerce.productName(),
+            amount: faker.commerce.price(),            
             price: faker.commerce.price(),
             isBlock: faker.datatype.boolean(),
         })
